@@ -106,7 +106,7 @@ class DockerNode(CommonNode):
             binds=None, network_mode='none', hostname=None,
             shared_dir_base='/tmp/topology/docker/',
             shared_dir_mount='/var/topology', environment=None,
-            tty=True, **kwargs):
+            tty=True, devices=None, **kwargs):
 
         super(DockerNode, self).__init__(identifier, **kwargs)
 
@@ -149,6 +149,7 @@ class DockerNode(CommonNode):
         self._host_config = self._client.create_host_config(
             # Container is given access to all devices
             privileged=True,
+            devices=devices,
             # Avoid connecting to host bridge, usually docker0
             network_mode=network_mode,
             binds=container_binds
